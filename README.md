@@ -27,7 +27,7 @@ It receives position data from X-Plane output.
 
 # Misc
 
-If you have only 1 machein, and if you select the menu file -> "Stay on top", you can see the map while X-Plane is running.
+If you have only 1 machine, and if you select the menu file -> "Stay on top", you can see the map while X-Plane is running.
 You can modify the transparency and hide the title bar too (but you must display the title bar to move the map !).
 
 ![](/doc/screenshot4.png)
