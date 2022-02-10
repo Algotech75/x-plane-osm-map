@@ -25,10 +25,22 @@ It receives position data from X-Plane output.
 
 ![](/doc/screenshot2.png)
 
-# Misc
+# Options
 
 If you have only 1 machine, and if you select the menu file -> "Stay on top", you can see the map while X-Plane is running.
 You can modify the transparency and hide the title bar too (but you must display the title bar to move the map !).
 
 ![](/doc/screenshot4.png)
 
+
+# TODO
+
+* Display plane orientation
+* Speed
+* Altitude
+* Etc...
+
+
+# About
+
+If you are satisfied with this application, and you would like to make a donation, please do so to someone in need :)
