@@ -1,4 +1,4 @@
-# x-plane-rt-map
+# x-plane-osm-map
 **X-Plane real time OSM map**
 
 This project is a C# application embedding a map renderer (Leaflet with OpenStreetMap).
@@ -19,7 +19,7 @@ It receives position data from X-Plane output.
 ![](/doc/screenshot3.png)
 
 
-* In X-Plane-rt-map, go in menu file -> setup.
+* In X-Plane-osm-map, go in menu file -> setup.
 * You can see the IP of the machine running the map.
 * Set the same UDP port as the one in X-Plane (49003 by default).
 
