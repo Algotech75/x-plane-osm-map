@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1259
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X-Plane-RT-map", "X-Plane-RT-map.csproj", "{86383D63-5388-4944-8F24-E8D071168E24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X-Plane-OSM-Map", "X-Plane-OSM-Map.csproj", "{86383D63-5388-4944-8F24-E8D071168E24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

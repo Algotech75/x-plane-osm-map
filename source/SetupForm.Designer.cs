@@ -1,4 +1,4 @@
-﻿namespace X_Plane_RT_map
+﻿namespace X_Plane_OSM_Map
 {
 	partial class SetupForm
 	{
@@ -35,11 +35,12 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.textBoxIP = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(115, 149);
+			this.button1.Location = new System.Drawing.Point(115, 219);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(97, 34);
 			this.button1.TabIndex = 0;
@@ -112,12 +113,24 @@
 			this.label4.TabIndex = 5;
 			this.label4.Text = "This machine IP :";
 			// 
+			// label5
+			// 
+			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.label5.Location = new System.Drawing.Point(16, 161);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(300, 41);
+			this.label5.TabIndex = 7;
+			this.label5.Text = "On the same port, you have a basic support for NMEA sentences (RMC, GGA, GLL).";
+			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// SetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(328, 195);
+			this.ClientSize = new System.Drawing.Size(328, 273);
 			this.ControlBox = false;
+			this.Controls.Add(this.label5);
 			this.Controls.Add(this.textBoxIP);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.label3);
@@ -142,5 +155,6 @@
 		private System.Windows.Forms.TextBox textBoxIP;
 		private System.Windows.Forms.Label label4;
 		public System.Windows.Forms.TextBox textBoxPort;
+		private System.Windows.Forms.Label label5;
 	}
 }

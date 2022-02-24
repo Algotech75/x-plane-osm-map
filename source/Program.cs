@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace X_Plane_RT_map
+namespace X_Plane_OSM_Map
 {
 	static class Program
 	{

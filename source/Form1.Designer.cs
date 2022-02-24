@@ -1,4 +1,4 @@
-﻿namespace X_Plane_RT_map
+﻿namespace X_Plane_OSM_Map
 {
 	partial class Form1
 	{
@@ -32,18 +32,20 @@
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.stayOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toggleTitleBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.reloadMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.transparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toggleTitleBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.stayOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.autoCenteringModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveRouteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -73,40 +75,57 @@
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.testToolStripMenuItem,
             this.stayOnTopToolStripMenuItem,
+            this.autoCenteringModeToolStripMenuItem,
             this.toggleTitleBarToolStripMenuItem,
             this.reloadMapToolStripMenuItem,
             this.aboutToolStripMenuItem,
+            this.saveRouteToolStripMenuItem,
             this.quitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
-			// quitToolStripMenuItem
-			// 
-			this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-			this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.quitToolStripMenuItem.Text = "Quit";
-			this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
-			// 
 			// testToolStripMenuItem
 			// 
 			this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-			this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.testToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
 			this.testToolStripMenuItem.Text = "Setup";
 			this.testToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
 			// 
-			// timer1
+			// stayOnTopToolStripMenuItem
 			// 
-			this.timer1.Enabled = true;
-			this.timer1.Interval = 1000;
-			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			this.stayOnTopToolStripMenuItem.Name = "stayOnTopToolStripMenuItem";
+			this.stayOnTopToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.stayOnTopToolStripMenuItem.Text = "Stay on top";
+			this.stayOnTopToolStripMenuItem.Click += new System.EventHandler(this.stayOnTopToolStripMenuItem_Click);
+			// 
+			// toggleTitleBarToolStripMenuItem
+			// 
+			this.toggleTitleBarToolStripMenuItem.Name = "toggleTitleBarToolStripMenuItem";
+			this.toggleTitleBarToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.toggleTitleBarToolStripMenuItem.Text = "Toggle Title bar";
+			this.toggleTitleBarToolStripMenuItem.Click += new System.EventHandler(this.toggleTitleBarToolStripMenuItem_Click);
 			// 
 			// reloadMapToolStripMenuItem
 			// 
 			this.reloadMapToolStripMenuItem.Name = "reloadMapToolStripMenuItem";
-			this.reloadMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.reloadMapToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
 			this.reloadMapToolStripMenuItem.Text = "Reload map";
 			this.reloadMapToolStripMenuItem.Click += new System.EventHandler(this.reloadMapToolStripMenuItem_Click);
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.aboutToolStripMenuItem.Text = "About...";
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			// 
+			// quitToolStripMenuItem
+			// 
+			this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+			this.quitToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.quitToolStripMenuItem.Text = "Quit";
+			this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
 			// 
 			// transparencyToolStripMenuItem
 			// 
@@ -123,7 +142,7 @@
 			// 
 			this.toolStripMenuItem2.CheckOnClick = true;
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(102, 22);
 			this.toolStripMenuItem2.Text = "25%";
 			this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
 			// 
@@ -131,7 +150,7 @@
 			// 
 			this.toolStripMenuItem3.CheckOnClick = true;
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(102, 22);
 			this.toolStripMenuItem3.Text = "50%";
 			this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click_1);
 			// 
@@ -139,7 +158,7 @@
 			// 
 			this.toolStripMenuItem4.CheckOnClick = true;
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+			this.toolStripMenuItem4.Size = new System.Drawing.Size(102, 22);
 			this.toolStripMenuItem4.Text = "75%";
 			this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click_1);
 			// 
@@ -147,30 +166,29 @@
 			// 
 			this.toolStripMenuItem5.CheckOnClick = true;
 			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-			this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+			this.toolStripMenuItem5.Size = new System.Drawing.Size(102, 22);
 			this.toolStripMenuItem5.Text = "100%";
 			this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click_1);
 			// 
-			// toggleTitleBarToolStripMenuItem
+			// timer1
 			// 
-			this.toggleTitleBarToolStripMenuItem.Name = "toggleTitleBarToolStripMenuItem";
-			this.toggleTitleBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.toggleTitleBarToolStripMenuItem.Text = "Toggle Title bar";
-			this.toggleTitleBarToolStripMenuItem.Click += new System.EventHandler(this.toggleTitleBarToolStripMenuItem_Click);
+			this.timer1.Enabled = true;
+			this.timer1.Interval = 1000;
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
-			// stayOnTopToolStripMenuItem
+			// autoCenteringModeToolStripMenuItem
 			// 
-			this.stayOnTopToolStripMenuItem.Name = "stayOnTopToolStripMenuItem";
-			this.stayOnTopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.stayOnTopToolStripMenuItem.Text = "Stay on top";
-			this.stayOnTopToolStripMenuItem.Click += new System.EventHandler(this.stayOnTopToolStripMenuItem_Click);
+			this.autoCenteringModeToolStripMenuItem.Name = "autoCenteringModeToolStripMenuItem";
+			this.autoCenteringModeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.autoCenteringModeToolStripMenuItem.Text = "Auto centering mode";
+			this.autoCenteringModeToolStripMenuItem.Click += new System.EventHandler(this.autoCenteringModeToolStripMenuItem_Click);
 			// 
-			// aboutToolStripMenuItem
+			// saveRouteToolStripMenuItem
 			// 
-			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.aboutToolStripMenuItem.Text = "About...";
-			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			this.saveRouteToolStripMenuItem.Name = "saveRouteToolStripMenuItem";
+			this.saveRouteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.saveRouteToolStripMenuItem.Text = "Save route...";
+			this.saveRouteToolStripMenuItem.Click += new System.EventHandler(this.saveRouteToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
@@ -207,6 +225,8 @@
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
 		private System.Windows.Forms.ToolStripMenuItem stayOnTopToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem autoCenteringModeToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveRouteToolStripMenuItem;
 	}
 }
 

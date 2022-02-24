@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace X_Plane_RT_map.Properties
+namespace X_Plane_OSM_Map.Properties
 {
 
 

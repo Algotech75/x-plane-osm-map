@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{86383D63-5388-4944-8F24-E8D071168E24}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>X_Plane_RT_map</RootNamespace>
-    <AssemblyName>X-Plane-RT-map</AssemblyName>
+    <RootNamespace>X_Plane_OSM_Map</RootNamespace>
+    <AssemblyName>X-Plane-OSM-Map</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

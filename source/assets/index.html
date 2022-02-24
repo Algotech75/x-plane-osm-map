@@ -30,6 +30,7 @@
 	var mark = L.marker([0,0],{icon:icon}).addTo(map);
 	var line = [];
 	var poly = L.polyline(line, {color: 'blue'}).addTo(map);
+	var autoPan	= true;
 
 	var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 	{
@@ -45,8 +46,16 @@
 			var pos = L.latLng(lat,lon);
 			poly.addLatLng(pos);
 			mark.setLatLng(pos);
+			if (autoPan)
+			{
 			map.panTo(pos);
 		}
+	}
+	}
+	
+	function setAutoCentering(autoCentering)
+	{
+		autoPan = (autoCentering == "true");
 	}
 	
 	map.setZoom(13);

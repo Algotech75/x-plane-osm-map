@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace X_Plane_RT_map.Properties
+namespace X_Plane_OSM_Map.Properties
 {
 
 
@@ -44,7 +44,7 @@ namespace X_Plane_RT_map.Properties
 			{
 				if ((resourceMan == null))
 				{
-					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("X_Plane_RT_map.Properties.Resources", typeof(Resources).Assembly);
+					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("X_Plane_OSM_Map.Properties.Resources", typeof(Resources).Assembly);
 					resourceMan = temp;
 				}
 				return resourceMan;
