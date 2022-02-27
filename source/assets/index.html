@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<title>X-Plane Realtime Map</title>
+	<title>X-Plane OSM Map</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -25,12 +25,14 @@
 <body>
 <div id="map"></div>
 <script>
-	var icon = L.icon({iconUrl: 'icon-goto.png', iconSize: [96,96], iconAnchor: [48,48]});
-	var map  = L.map('map').fitWorld();
-	var mark = L.marker([0,0],{icon:icon}).addTo(map);
-	var line = [];
-	var poly = L.polyline(line, {color: 'blue'}).addTo(map);
-	var autoPan	= true;
+	var iconTarget	= L.icon({iconUrl: 'icon-goto.png',  iconSize: [96,96], iconAnchor: [48,48]});
+	var icoPlane	= L.icon({iconUrl: 'icon-plane.png', iconSize: [48,48]});
+	var map			= L.map('map').fitWorld();
+	var marker		= L.marker([0,0],{icon:iconTarget}).addTo(map);
+	var line		= [];
+	var polyline	= L.polyline(line, {color: 'blue'}).addTo(map);
+	var autoPan		= true;
+	var bHasHdg		= false;
 
 	var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 	{
@@ -39,18 +41,37 @@
 		tileSize: 256
 	}).addTo(map);
 
-	function setPosition(lat,lon)
+	function setPosition(lat,lon,hdg)
 	{
 		if (map)
 		{
+			lat = parseFloat(lat);
+			lon = parseFloat(lon);
+			hdg = parseFloat(hdg);
+			
 			var pos = L.latLng(lat,lon);
-			poly.addLatLng(pos);
-			mark.setLatLng(pos);
+
+			polyline.addLatLng(pos);
+			marker  .setLatLng(pos);
+
+			if (hdg >= 0.0)
+			{
+				if (bHasHdg == false)
+				{
+					bHasHdg = true;
+					marker.setIcon(icoPlane);
+				}
+				if (marker._icon && marker._icon.style)
+				{
+					marker._icon.style.transformOrigin = "50% 50%";
+					marker._icon.style.transform = 'translate('+(marker._icon._leaflet_pos.x-0)+'px,'+(marker._icon._leaflet_pos.y-0)+'px) rotate('+hdg+'deg)';
+				}
+			}
 			if (autoPan)
 			{
-			map.panTo(pos);
+				map.panTo(pos);
+			}
 		}
-	}
 	}
 	
 	function setAutoCentering(autoCentering)

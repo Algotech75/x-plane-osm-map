@@ -21,7 +21,7 @@ namespace X_Plane_OSM_Map
 		
 		private string getLocalIp()
 		{
-			string localIP;
+			string localIP = "127.0.0.1";
 			using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
 			{
 				socket.Connect("8.8.8.8", 65530);	// Google DNS

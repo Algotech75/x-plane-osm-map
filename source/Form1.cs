@@ -18,92 +18,162 @@ namespace X_Plane_OSM_Map
 	public partial class Form1 : Form
 	{
 		public Thread		m_ListenThread;
-		public Mutex		m_Mutex = new Mutex();
-		public bool			m_IsRunning;
-		public UdpClient	m_ReceivingUdpClient = null;
-		public string		m_Lat  = "43.1802304";
-		public string		m_Lon     =  "5.5934522";
-		public string		m_LastLat = "43.1802304";
-		public string		m_LastLon =  "5.5934522";
-		public int			m_Port = 49003;
-		public bool			m_StayOnTop    = false;
-		public bool			m_ShowTitleBar = true;
-		public bool			m_AutoCentering = true;
-		public string		m_GpxContent    = "";
+		public Mutex		m_Mutex			= new Mutex();
+		public bool			m_IsRunning		= false;
+		public UdpClient	m_RecvUdpClient	= null;
+		public string		m_Lat			= "43.1802304";
+		public string		m_Lon			=  "5.5934522";
+		public string		m_Hdg			= "-1.0";
+		public string		m_LastLat		= "43.1802304";
+		public string		m_LastLon		=  "5.5934522";
+		public string		m_LastHdg		= "-1.0";
+		public int			m_Port			= 49003;
+		public bool			m_StayOnTop		= false;
+		public bool			m_ShowTitleBar	= true;
+		public bool			m_AutoCentering	= true;
+		public string		m_GpxContent	= "";
 
 		public void ThreadReceiver()
 		{
+			char[] separators = new char[] { '\r', '\n' };
 			IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, m_Port);
-			m_ReceivingUdpClient = new UdpClient(endPoint);
+			m_RecvUdpClient = new UdpClient(endPoint);
 
 			while (m_IsRunning)
 			{
 				try
 				{
-					Byte[] data = m_ReceivingUdpClient.Receive(ref endPoint);
-					if (data.Length == 41)
+					Byte[] data = m_RecvUdpClient.Receive(ref endPoint);
+					if (data.Length >= 9)
 					{
-						int index = data[5] + data[6] * 256 + data[7] * 65536 + data[8] * 16777216;
-						if (index == 20)
+						if ((char)data[0] == 'D' && 
+							(char)data[1] == 'A' && 
+							(char)data[2] == 'T' && 
+							(char)data[3] == 'A')
 						{
-							float lat = BitConverter.ToSingle(data, 9);
-							float lon = BitConverter.ToSingle(data, 13);
-							m_Lat = lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
-							m_Lon = lon.ToString(System.Globalization.CultureInfo.InvariantCulture);
+							// Skip "DATA" header
+							Byte[] array = new Byte[data.Length - 5];
+							Buffer.BlockCopy(data, 5, array, 0, data.Length - 5);
+							data = array;
+
+							while (data.Length > 0)
+							{
+								int index = data[0] + data[1] * 256 + data[2] * 65536 + data[3] * 16777216;
+								switch (index)
+								{
+									case 20:
+									{
+										float lat = BitConverter.ToSingle(data, 4);
+										float lon = BitConverter.ToSingle(data, 8);
+										float deg = BitConverter.ToSingle(data, 12);
+										float abc = BitConverter.ToSingle(data, 16);
+										float def = BitConverter.ToSingle(data, 20);
+										m_Lat = lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
+										m_Lon = lon.ToString(System.Globalization.CultureInfo.InvariantCulture);
+										int toSkip = 36;
+										Byte[] array2 = new Byte[data.Length - toSkip];
+										Buffer.BlockCopy(data, toSkip, array2, 0, data.Length - toSkip);
+										data = array2;
+										break;
+									}
+									case 17:
+									{
+
+	//									float pitch = BitConverter.ToSingle(data, 4);
+	//									float roll  = BitConverter.ToSingle(data, 8);
+										float head  = BitConverter.ToSingle(data, 12);
+	//									float north = BitConverter.ToSingle(data, 16);
+										m_Hdg = head.ToString(System.Globalization.CultureInfo.InvariantCulture);
+										int toSkip = 36;
+										Byte[] array2 = new Byte[data.Length - toSkip];
+										Buffer.BlockCopy(data, toSkip, array2, 0, data.Length - toSkip);
+										data = array2;
+										break;
+									}
+								}
+							}
+							continue;
 						}
 					}
-					else if (data.Length > 6 && data[0]=='$' && data[data.Length-3] == '*')
+					else if (data.Length > 6 && data[0] == '$')
 					{
-						string sentence = System.Text.Encoding.Default.GetString(data);
-						string[] tokens = sentence.Substring(3, sentence.IndexOf("*")).Split(',');
-						if (tokens.Length > 5)
+						string[] sentences   = System.Text.Encoding.Default.GetString(data).Split(separators, StringSplitOptions.RemoveEmptyEntries);
+						string   nmeaLatVal  = "0.0";
+						string   nmeaLonVal  = "0.0";
+						string   nmeaLatOri  = "N";
+						string   nmeaLonOri  = "E";
+						string   nmeaHdgVal  = "0.0";
+						bool     bHasCoord   = false;
+						bool     bHasHeading = false;
+
+						for (int i=0; i<sentences.Length; i++)
 						{
-							// NMEA ?
-							if (tokens[0] == "GLL" && tokens.Length > 5)
+							string trameType = sentences[i].Substring(3, 3);
+
+							if (bHasHeading == false)
 							{
-								double sLat   = Double.Parse(tokens[1], System.Globalization.CultureInfo.InvariantCulture);
-								double sLon   = Double.Parse(tokens[3], System.Globalization.CultureInfo.InvariantCulture);
-								double degLat = (double)((int)(sLat / 100));
-								double degLon = (double)((int)(sLon / 100));
-								double minLat = (sLat - degLat*100)/60.0;
-								double minLon = (sLon - degLon*100)/60.0;
-								degLat += minLat;
-								degLon += minLon;
-								if (tokens[2][0] == 'S' || tokens[2][0] == 's') degLat *= -1.0;
-								if (tokens[4][0] == 'W' || tokens[4][0] == 'w') degLon *= -1.0;
-								m_Lat = degLat.ToString(System.Globalization.CultureInfo.InvariantCulture);
-								m_Lon = degLon.ToString(System.Globalization.CultureInfo.InvariantCulture);
+								if (trameType == "HDT")
+								{
+									string[] tokens = sentences[i].Substring(0, sentences[i].Length-3).Split(',');
+									nmeaHdgVal = tokens[1];
+									bHasHeading = true;
+									continue;
+								}
 							}
-							else if (tokens[0] == "RMC" && tokens.Length > 7)
+
+							if (bHasCoord == false)
 							{
-								double sLat = Double.Parse(tokens[3], System.Globalization.CultureInfo.InvariantCulture);
-								double sLon = Double.Parse(tokens[5], System.Globalization.CultureInfo.InvariantCulture);
-								double degLat = (double)((int)(sLat / 100));
-								double degLon = (double)((int)(sLon / 100));
-								double minLat = (sLat - degLat * 100) / 60.0;
-								double minLon = (sLon - degLon * 100) / 60.0;
-								degLat += minLat;
-								degLon += minLon;
-								if (tokens[4][0] == 'S' || tokens[4][0] == 's') degLat *= -1.0;
-								if (tokens[6][0] == 'W' || tokens[6][0] == 'w') degLon *= -1.0;
-								m_Lat = degLat.ToString(System.Globalization.CultureInfo.InvariantCulture);
-								m_Lon = degLon.ToString(System.Globalization.CultureInfo.InvariantCulture);
+								if (trameType == "GLL")
+								{
+									string[] tokens = sentences[i].Split(',');
+									nmeaLatVal = tokens[1];
+									nmeaLonVal = tokens[3];
+									nmeaLatOri = tokens[2];
+									nmeaLonOri = tokens[4];
+									bHasCoord  = true;
+									continue;
+								}
+								else if (trameType == "RMC")
+								{
+									string[] tokens = sentences[i].Split(',');
+									nmeaLatVal = tokens[3];
+									nmeaLonVal = tokens[5];
+									nmeaLatOri = tokens[4];
+									nmeaLonOri = tokens[6];
+									bHasCoord = true;
+									continue;
+								}
+								else if (trameType == "GGA")
+								{
+									string[] tokens = sentences[i].Split(',');
+									nmeaLatVal = tokens[2];
+									nmeaLonVal = tokens[4];
+									nmeaLatOri = tokens[3];
+									nmeaLonOri = tokens[5];
+									bHasCoord = true;
+									continue;
+								}
 							}
-							else if (tokens[0] == "GGA" && tokens.Length > 6)
-							{
-								double sLat = Double.Parse(tokens[2], System.Globalization.CultureInfo.InvariantCulture);
-								double sLon = Double.Parse(tokens[4], System.Globalization.CultureInfo.InvariantCulture);
-								double degLat = (double)((int)(sLat / 100));
-								double degLon = (double)((int)(sLon / 100));
-								double minLat = (sLat - degLat * 100) / 60.0;
-								double minLon = (sLon - degLon * 100) / 60.0;
-								degLat += minLat;
-								degLon += minLon;
-								if (tokens[3][0] == 'S' || tokens[3][0] == 's') degLat *= -1.0;
-								if (tokens[5][0] == 'W' || tokens[5][0] == 'w') degLon *= -1.0;
-								m_Lat = degLat.ToString(System.Globalization.CultureInfo.InvariantCulture);
-								m_Lon = degLon.ToString(System.Globalization.CultureInfo.InvariantCulture);
-							}
+						}
+						if (bHasHeading)
+						{
+							double trueHeading = Double.Parse(nmeaHdgVal, System.Globalization.CultureInfo.InvariantCulture);
+							m_Hdg = trueHeading.ToString(System.Globalization.CultureInfo.InvariantCulture);
+						}
+						if (bHasCoord)
+						{
+							double sLat = Double.Parse(nmeaLatVal, System.Globalization.CultureInfo.InvariantCulture);
+							double sLon = Double.Parse(nmeaLonVal, System.Globalization.CultureInfo.InvariantCulture);
+							double degLat = (double)((int)(sLat / 100));
+							double degLon = (double)((int)(sLon / 100));
+							double minLat = (sLat - degLat * 100) / 60.0;
+							double minLon = (sLon - degLon * 100) / 60.0;
+							degLat += minLat;
+							degLon += minLon;
+							if (nmeaLatOri[0] == 'S' || nmeaLatOri[0] == 's') degLat *= -1.0;
+							if (nmeaLonOri[0] == 'W' || nmeaLonOri[0] == 'w') degLon *= -1.0;
+							m_Lat = degLat.ToString(System.Globalization.CultureInfo.InvariantCulture);
+							m_Lon = degLon.ToString(System.Globalization.CultureInfo.InvariantCulture);
 						}
 					}
 				}
@@ -135,7 +205,8 @@ namespace X_Plane_OSM_Map
 		private void StopMap()
 		{
 			m_IsRunning = false;
-			m_ReceivingUdpClient.Close();
+			m_RecvUdpClient.Close();
+			m_ListenThread.Join();
 		}
 
 		private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -150,22 +221,27 @@ namespace X_Plane_OSM_Map
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
+			if (m_Lat != m_LastLat || m_Lon != m_LastLon || m_Hdg != m_LastHdg)
+			{
+				string[] param = new string[] { m_Lat, m_Lon, m_Hdg };
+				this.webBrowser1.Document.InvokeScript("setPosition", param);
+			}
 			if (m_Lat != m_LastLat || m_Lon != m_LastLon)
 			{
-			string[] param = new string[] { m_Lat, m_Lon };
-			this.webBrowser1.Document.InvokeScript("setPosition", param);
 				m_Mutex.WaitOne();
 				m_GpxContent += "<trkpt lat=\""+ m_Lat + "\" lon=\"" + m_Lon + "\"></trkpt>\n";
 				m_Mutex.ReleaseMutex();
-				m_LastLat = m_Lat;
-				m_LastLon = m_Lon;
 			}
+			m_LastLat = m_Lat;
+			m_LastLon = m_Lon;
+			m_LastHdg = m_Hdg;
 		}
 
 		private void setupToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			StopMap();
 			SetupForm form = new SetupForm();
+			form.textBoxPort.Text = m_Port.ToString();
 			form.ShowDialog(this);
 			m_Port = Int32.Parse(form.textBoxPort.Text);
 			StartMap();

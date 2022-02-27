@@ -34,9 +34,11 @@
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.stayOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.autoCenteringModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toggleTitleBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.reloadMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveRouteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.transparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,18 +46,17 @@
 			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
-			this.autoCenteringModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveRouteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// webBrowser1
 			// 
+			this.webBrowser1.AllowWebBrowserDrop = false;
 			this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.webBrowser1.IsWebBrowserContextMenuEnabled = false;
 			this.webBrowser1.Location = new System.Drawing.Point(0, 24);
 			this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
 			this.webBrowser1.Name = "webBrowser1";
-			this.webBrowser1.ScriptErrorsSuppressed = true;
 			this.webBrowser1.Size = new System.Drawing.Size(858, 490);
 			this.webBrowser1.TabIndex = 0;
 			// 
@@ -99,6 +100,13 @@
 			this.stayOnTopToolStripMenuItem.Text = "Stay on top";
 			this.stayOnTopToolStripMenuItem.Click += new System.EventHandler(this.stayOnTopToolStripMenuItem_Click);
 			// 
+			// autoCenteringModeToolStripMenuItem
+			// 
+			this.autoCenteringModeToolStripMenuItem.Name = "autoCenteringModeToolStripMenuItem";
+			this.autoCenteringModeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.autoCenteringModeToolStripMenuItem.Text = "Auto centering mode";
+			this.autoCenteringModeToolStripMenuItem.Click += new System.EventHandler(this.autoCenteringModeToolStripMenuItem_Click);
+			// 
 			// toggleTitleBarToolStripMenuItem
 			// 
 			this.toggleTitleBarToolStripMenuItem.Name = "toggleTitleBarToolStripMenuItem";
@@ -119,6 +127,13 @@
 			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
 			this.aboutToolStripMenuItem.Text = "About...";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			// 
+			// saveRouteToolStripMenuItem
+			// 
+			this.saveRouteToolStripMenuItem.Name = "saveRouteToolStripMenuItem";
+			this.saveRouteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.saveRouteToolStripMenuItem.Text = "Save route...";
+			this.saveRouteToolStripMenuItem.Click += new System.EventHandler(this.saveRouteToolStripMenuItem_Click);
 			// 
 			// quitToolStripMenuItem
 			// 
@@ -173,22 +188,8 @@
 			// timer1
 			// 
 			this.timer1.Enabled = true;
-			this.timer1.Interval = 1000;
+			this.timer1.Interval = 250;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-			// 
-			// autoCenteringModeToolStripMenuItem
-			// 
-			this.autoCenteringModeToolStripMenuItem.Name = "autoCenteringModeToolStripMenuItem";
-			this.autoCenteringModeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.autoCenteringModeToolStripMenuItem.Text = "Auto centering mode";
-			this.autoCenteringModeToolStripMenuItem.Click += new System.EventHandler(this.autoCenteringModeToolStripMenuItem_Click);
-			// 
-			// saveRouteToolStripMenuItem
-			// 
-			this.saveRouteToolStripMenuItem.Name = "saveRouteToolStripMenuItem";
-			this.saveRouteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.saveRouteToolStripMenuItem.Text = "Save route...";
-			this.saveRouteToolStripMenuItem.Click += new System.EventHandler(this.saveRouteToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
