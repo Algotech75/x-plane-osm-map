@@ -46,6 +46,7 @@
 			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -148,6 +149,7 @@
             this.toolStripMenuItem2,
             this.toolStripMenuItem3,
             this.toolStripMenuItem4,
+            this.toolStripMenuItem6,
             this.toolStripMenuItem5});
 			this.transparencyToolStripMenuItem.Name = "transparencyToolStripMenuItem";
 			this.transparencyToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
@@ -157,7 +159,7 @@
 			// 
 			this.toolStripMenuItem2.CheckOnClick = true;
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(102, 22);
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
 			this.toolStripMenuItem2.Text = "25%";
 			this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
 			// 
@@ -165,7 +167,7 @@
 			// 
 			this.toolStripMenuItem3.CheckOnClick = true;
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(102, 22);
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
 			this.toolStripMenuItem3.Text = "50%";
 			this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click_1);
 			// 
@@ -173,7 +175,7 @@
 			// 
 			this.toolStripMenuItem4.CheckOnClick = true;
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.Size = new System.Drawing.Size(102, 22);
+			this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
 			this.toolStripMenuItem4.Text = "75%";
 			this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click_1);
 			// 
@@ -181,7 +183,7 @@
 			// 
 			this.toolStripMenuItem5.CheckOnClick = true;
 			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-			this.toolStripMenuItem5.Size = new System.Drawing.Size(102, 22);
+			this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
 			this.toolStripMenuItem5.Text = "100%";
 			this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click_1);
 			// 
@@ -190,6 +192,13 @@
 			this.timer1.Enabled = true;
 			this.timer1.Interval = 250;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			// 
+			// toolStripMenuItem6
+			// 
+			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+			this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+			this.toolStripMenuItem6.Text = "85%";
+			this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
 			// 
 			// Form1
 			// 
@@ -228,6 +237,7 @@
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem autoCenteringModeToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveRouteToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
 	}
 }
 

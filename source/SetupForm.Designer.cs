@@ -121,7 +121,8 @@
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(300, 41);
 			this.label5.TabIndex = 7;
-			this.label5.Text = "On the same port, you have a basic support for NMEA sentences (RMC, GGA, GLL).";
+			this.label5.Text = "On the same port, you have a basic support for NMEA sentences (RMC, GGA, GLL, HDT" +
+    ").";
 			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// SetupForm

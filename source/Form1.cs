@@ -37,7 +37,17 @@ namespace X_Plane_OSM_Map
 		{
 			char[] separators = new char[] { '\r', '\n' };
 			IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, m_Port);
-			m_RecvUdpClient = new UdpClient(endPoint);
+			try
+			{
+				m_RecvUdpClient = new UdpClient(endPoint);
+			}
+			catch (SocketException ex)
+			{
+				m_IsRunning = false;
+				MessageBox.Show("Connection error. Maybe the port is already used ? Use the menu 'Reload map' to try again.\nError : "+ ex.Message, "Error", MessageBoxButtons.OK);
+				return;
+			}
+
 
 			while (m_IsRunning)
 			{
@@ -70,27 +80,23 @@ namespace X_Plane_OSM_Map
 										float def = BitConverter.ToSingle(data, 20);
 										m_Lat = lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
 										m_Lon = lon.ToString(System.Globalization.CultureInfo.InvariantCulture);
-										int toSkip = 36;
-										Byte[] array2 = new Byte[data.Length - toSkip];
-										Buffer.BlockCopy(data, toSkip, array2, 0, data.Length - toSkip);
-										data = array2;
 										break;
 									}
 									case 17:
 									{
 
-	//									float pitch = BitConverter.ToSingle(data, 4);
-	//									float roll  = BitConverter.ToSingle(data, 8);
+//										float pitch = BitConverter.ToSingle(data, 4);
+//										float roll  = BitConverter.ToSingle(data, 8);
 										float head  = BitConverter.ToSingle(data, 12);
-	//									float north = BitConverter.ToSingle(data, 16);
+//										float north = BitConverter.ToSingle(data, 16);
 										m_Hdg = head.ToString(System.Globalization.CultureInfo.InvariantCulture);
-										int toSkip = 36;
-										Byte[] array2 = new Byte[data.Length - toSkip];
-										Buffer.BlockCopy(data, toSkip, array2, 0, data.Length - toSkip);
-										data = array2;
 										break;
 									}
 								}
+								int toSkip = 36;
+								Byte[] array2 = new Byte[data.Length - toSkip];
+								Buffer.BlockCopy(data, toSkip, array2, 0, data.Length - toSkip);
+								data = array2;
 							}
 							continue;
 						}
@@ -205,7 +211,10 @@ namespace X_Plane_OSM_Map
 		private void StopMap()
 		{
 			m_IsRunning = false;
-			m_RecvUdpClient.Close();
+			if (m_RecvUdpClient != null)
+			{
+				m_RecvUdpClient.Close();
+			}
 			m_ListenThread.Join();
 		}
 
@@ -268,6 +277,7 @@ namespace X_Plane_OSM_Map
 			toolStripMenuItem2.Checked = true;
 			toolStripMenuItem3.Checked = false;
 			toolStripMenuItem4.Checked = false;
+			toolStripMenuItem6.Checked = false;
 			toolStripMenuItem5.Checked = false;
 			this.Opacity = 0.25;
 		}
@@ -277,6 +287,7 @@ namespace X_Plane_OSM_Map
 			toolStripMenuItem2.Checked = false;
 			toolStripMenuItem3.Checked = true;
 			toolStripMenuItem4.Checked = false;
+			toolStripMenuItem6.Checked = false;
 			toolStripMenuItem5.Checked = false;
 			this.Opacity = 0.50;
 		}
@@ -286,8 +297,19 @@ namespace X_Plane_OSM_Map
 			toolStripMenuItem2.Checked = false;
 			toolStripMenuItem3.Checked = false;
 			toolStripMenuItem4.Checked = true;
+			toolStripMenuItem6.Checked = false;
 			toolStripMenuItem5.Checked = false;
 			this.Opacity = 0.75;
+		}
+
+		private void toolStripMenuItem6_Click(object sender, EventArgs e)
+		{
+			toolStripMenuItem2.Checked = false;
+			toolStripMenuItem3.Checked = false;
+			toolStripMenuItem4.Checked = false;
+			toolStripMenuItem6.Checked = true;
+			toolStripMenuItem5.Checked = false;
+			this.Opacity = 0.85;
 		}
 
 		private void toolStripMenuItem5_Click_1(object sender, EventArgs e)
@@ -295,6 +317,7 @@ namespace X_Plane_OSM_Map
 			toolStripMenuItem2.Checked = false;
 			toolStripMenuItem3.Checked = false;
 			toolStripMenuItem4.Checked = false;
+			toolStripMenuItem6.Checked = false;
 			toolStripMenuItem5.Checked = true;
 			this.Opacity = 1.0;
 		}
