@@ -12,12 +12,13 @@ It works well, but the code is ugly (the base has been coded in 3-4h).
 
 * First, In X-Plane-OSM-Map, go in menu "File" -> "Setup".
 * You can see the IP of the machine running the map. Use this IP to setup X-Plane.
-* Then, set the UDP port. It must be the same in X-Plane (49003 by default).
+* Set the UDP port. It must be the same in X-Plane (49003 by default).
 
 ![](/doc/screenshot2.png)
 
 
-* In X-Plane, go in setup to the data output tab.
+
+* Then, in X-Plane, go in setup to the data output tab.
 * Check the UDP checkbox, line 20 (Latitude/Longitude/Altitude).
 * Check the UDP checkbox, line 17 (Pitch, Roll, Headings).
 * Set the UDP packet rate (4 packets/second is enough).
