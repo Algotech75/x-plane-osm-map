@@ -225,7 +225,9 @@ namespace X_Plane_OSM_Map
 
 		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			timer1.Stop();
 			StopMap();
+			Application.Exit();
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
