@@ -376,6 +376,7 @@ namespace X_Plane_OSM_Map
 
 			footer  = "</trkseg>\n";
 			footer += "</trk>\n";
+			footer += "</gpx>\n";
 
 			StreamWriter outputFile = new StreamWriter(filename);
 			outputFile.Write(header);
